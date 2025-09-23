@@ -1,6 +1,14 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import from_json, col, current_timestamp, when, to_json, struct
 from pyspark.sql.types import StructType, DoubleType
+import findspark
+findspark.init()
+
+import os
+os.environ["PYSPARK_SUBMIT_ARGS"] = (
+    "--packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1 pyspark-shell"
+)
+
 
 schema = StructType() \
     .add("temperature", DoubleType()) \
@@ -32,7 +40,7 @@ df_output = df_transformed.select(to_json(struct("*")).alias("value"))
 
 df_output.writeStream \
     .format("kafka") \
-    .option("kafka.bootstrap.servers", "kafka:9092") \
+    .option("kafka.bootstrap.servers", "localhost:9092") \
     .option("topic", "weather_transformed") \
     .option("checkpointLocation", "/tmp/spark-checkpoint-weather") \
     .start() \

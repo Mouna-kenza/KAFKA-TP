@@ -1,5 +1,12 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col
+import findspark
+findspark.init()
+
+import os
+os.environ["PYSPARK_SUBMIT_ARGS"] = (
+    "--packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1 pyspark-shell"
+)
 
 # Créer la session Spark
 spark = SparkSession.builder.appName("WeatherConsumer").getOrCreate()
