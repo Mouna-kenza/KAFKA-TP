@@ -11,7 +11,7 @@ spark.sparkContext.setLogLevel("WARN")
 
 df_raw = spark.readStream \
     .format("kafka") \
-    .option("kafka.bootstrap.servers", "kafka:9092") \
+    .option("kafka.bootstrap.servers", "localhost:9092") \
     .option("subscribe", "weather_stream") \
     .load()
 
@@ -32,7 +32,7 @@ df_output = df_transformed.select(to_json(struct("*")).alias("value"))
 
 df_output.writeStream \
     .format("kafka") \
-    .option("kafka.bootstrap.servers", "kafka:9092") \
+    .option("kafka.bootstrap.servers", "localhost:9092") \
     .option("topic", "weather_transformed") \
     .option("checkpointLocation", "/tmp/spark-checkpoint-weather") \
     .start() \

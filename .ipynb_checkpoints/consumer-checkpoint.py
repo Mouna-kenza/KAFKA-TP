@@ -11,7 +11,7 @@ def main():
     # Création du consommateur Kafka
     consumer = KafkaConsumer(
         topic,
-        bootstrap_servers='kafka:9092',
+        bootstrap_servers='localhost:9092',
         auto_offset_reset='earliest',
         group_id='groupe-consommateur',
         enable_auto_commit=True

@@ -5,7 +5,7 @@ def create_producer():
     """Crée un producteur Kafka avec gestion d'erreurs"""
     try:
         producer = Producer({
-            'bootstrap.servers': 'kafka:9092',
+            'bootstrap.servers': 'localhost:9092',
             'client.id': 'python-producer'
         })
         return producer
